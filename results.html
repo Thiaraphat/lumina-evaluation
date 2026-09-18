@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ผลการประเมิน Lumina Electric Air</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@500;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sparkle-field" id="sparkleField" aria-hidden="true"></div>
+
+<div class="page-shell">
+  <div class="brand-mark">
+    <span class="spark-dot"></span>
+    <span class="brand-name">Lumina Electric Air — ผลการประเมิน</span>
+  </div>
+
+  <!-- PASSCODE GATE -->
+  <div class="card-stage passcode-gate" id="gateStage">
+    <div class="lumina-card">
+      <h2 id="gateTitle">เข้าสู่หน้าผลการประเมิน</h2>
+      <p>กรุณากรอกรหัสผ่านที่ได้รับจากผู้ดูแลโครงงานเพื่อดูสถิติสรุปผลแบบประเมิน</p>
+      <div class="field-group" data-field-key="passcode">
+        <label class="field-label" for="passcodeInput">รหัสผ่าน</label>
+        <input type="password" id="passcodeInput" placeholder="กรอกรหัสผ่าน"
+               style="width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid #DCE6FA;font-size:15px;font-family:inherit;">
+        <div class="field-error" id="passcodeError" style="display:none;">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</div>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-secondary" href="index.html" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;">กลับหน้าแบบประเมิน</a>
+        <button type="button" class="btn btn-primary" id="btnUnlock">เข้าสู่ระบบ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD (hidden until unlocked) -->
+  <div class="card-stage dashboard-shell" id="dashboardStage" style="display:none;">
+
+    <div class="dashboard-header">
+      <div>
+        <span class="role-badge" id="roleBadge"></span>
+        <h1 style="margin-top:6px;">สรุปผลการประเมินระบบ Lumina Electric Air</h1>
+      </div>
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-filter="all">ทั้งหมด</button>
+        <button class="filter-tab" data-filter="customer">ลูกค้า</button>
+        <button class="filter-tab" data-filter="technician">ช่าง</button>
+      </div>
+    </div>
+
+    <div class="banner banner-error" id="dashboardError"></div>
+    <div class="banner banner-info" id="dashboardLoading">กำลังโหลดข้อมูล...</div>
+
+    <div id="dashboardContent" style="display:none;">
+      <div class="stat-grid">
+        <div class="stat-tile"><div class="stat-label">จำนวนผู้ตอบ (N)</div><div class="stat-value" id="statN">-</div></div>
+        <div class="stat-tile"><div class="stat-label">คะแนนรวม</div><div class="stat-value" id="statTotal">-</div></div>
+        <div class="stat-tile"><div class="stat-label">คะแนนเต็ม</div><div class="stat-value" id="statFull">-</div></div>
+        <div class="stat-tile"><div class="stat-label">ร้อยละของคะแนนเต็ม</div><div class="stat-value" id="statPercent">-</div></div>
+        <div class="stat-tile"><div class="stat-label">ค่าเฉลี่ยรวม (Mean)</div><div class="stat-value" id="statMean">-</div></div>
+        <div class="stat-tile"><div class="stat-label">S.D. รวม</div><div class="stat-value" id="statSD">-</div></div>
+      </div>
+
+      <div class="lumina-card" style="margin-bottom:22px;">
+        <div class="stat-label">ระดับความพึงพอใจโดยรวม</div>
+        <div class="stat-value" id="statInterpretation" style="margin-top:4px;">-</div>
+      </div>
+
+      <h2>สถิติรายข้อ</h2>
+      <div id="questionStatsContainer"></div>
+
+      <div class="methodology-block">
+        <h3 style="margin-bottom:2px;">วิธีการคำนวณ</h3>
+        <dl>
+          <dt>ความถี่ (Frequency)</dt>
+          <dd>จำนวนผู้ตอบที่เลือกคะแนนนั้นในแต่ละข้อ</dd>
+
+          <dt>ร้อยละ (Percentage)</dt>
+          <dd>(ความถี่ ÷ จำนวนผู้ตอบทั้งหมด) × 100</dd>
+
+          <dt>ค่าเฉลี่ย (Mean)</dt>
+          <dd>คะแนนรวมของข้อนั้น ÷ จำนวนผู้ตอบ</dd>
+
+          <dt>คะแนนเต็ม (Full Score)</dt>
+          <dd>จำนวนข้อ (10) × คะแนนสูงสุดต่อข้อ (5) × จำนวนผู้ตอบ (N) — คำนวณใหม่ทุกครั้งตามจำนวนผู้ตอบปัจจุบัน ไม่ใช้ค่าคงที่</dd>
+
+          <dt>ร้อยละของคะแนนเต็ม</dt>
+          <dd>(คะแนนรวมจริง ÷ คะแนนเต็ม) × 100</dd>
+
+          <dt>ส่วนเบี่ยงเบนมาตรฐานรายข้อ (Question S.D.)</dt>
+          <dd>คำนวณจากคำตอบของผู้ตอบทุกคนในข้อนั้น ๆ ข้อเดียว โดยใช้สูตร Sample Standard Deviation (หารด้วย n−1)</dd>
+
+          <dt>ส่วนเบี่ยงเบนมาตรฐานรวม (Overall S.D.)</dt>
+          <dd>คำนวณจากคะแนนรวมของผู้ตอบแต่ละคน (ผลรวมคำตอบทั้ง 10 ข้อของคนคนนั้น มีค่าระหว่าง 10–50 คะแนน) ไม่ใช่จากคำตอบรายข้อที่นำมารวมกันทั้งหมด โดยใช้สูตร Sample Standard Deviation (หารด้วย n−1) เช่นเดียวกัน ค่านี้จึงแสดงว่าคะแนนรวมของผู้ตอบแต่ละคนกระจายตัวออกจากคะแนนรวมเฉลี่ยมากน้อยเพียงใด</dd>
+
+          <dt>เกณฑ์การแปลผลค่าเฉลี่ยความพึงพอใจ</dt>
+          <dd>
+            4.21–5.00 = มากที่สุด&nbsp;&nbsp;|&nbsp;&nbsp;
+            3.41–4.20 = มาก&nbsp;&nbsp;|&nbsp;&nbsp;
+            2.61–3.40 = ปานกลาง&nbsp;&nbsp;|&nbsp;&nbsp;
+            1.81–2.60 = น้อย&nbsp;&nbsp;|&nbsp;&nbsp;
+            1.00–1.80 = น้อยที่สุด
+          </dd>
+
+          <dt>ข้อมูลสะสม</dt>
+          <dd>สถิติทั้งหมดคำนวณจากคำตอบทุกชุดที่เคยถูกบันทึกไว้ใน Google Sheets ไม่ใช่เฉพาะการส่งครั้งล่าสุด เมื่อมีผู้ตอบเพิ่มขึ้น ระบบจะคำนวณค่าทั้งหมดใหม่โดยอัตโนมัติ</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="questions.js"></script>
+<script src="results.js"></script>
+</body>
+</html>

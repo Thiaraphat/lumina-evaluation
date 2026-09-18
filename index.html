@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบประเมิน Lumina Electric Air</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@500;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sparkle-field" id="sparkleField" aria-hidden="true"></div>
+
+<div class="page-shell">
+  <div class="brand-mark">
+    <span class="spark-dot"></span>
+    <span class="brand-name">Lumina Electric Air</span>
+  </div>
+
+  <div class="card-stage">
+    <div class="lumina-card">
+
+      <!-- SCREEN: intro / choose evaluator type -->
+      <section class="screen active" id="screen-intro">
+        <h1>แบบประเมินระบบ Lumina Electric Air</h1>
+        <p>แบบประเมินนี้ใช้เวลาเพียงไม่กี่นาที ไม่มีการเก็บชื่อหรือข้อมูลส่วนตัวใด ๆ คำตอบของท่านจะถูกนำไปใช้พัฒนาระบบ Lumina ต่อไป</p>
+        <p style="margin-top:-8px;">ท่านต้องการประเมินในฐานะใด</p>
+        <div class="evaluator-choice-grid">
+          <button type="button" class="choice-tile" data-type="customer">
+            <span class="tile-label">ลูกค้า</span>
+            <span class="tile-sub">ผู้ใช้บริการ Lumina</span>
+          </button>
+          <button type="button" class="choice-tile" data-type="technician">
+            <span class="tile-label">ช่าง</span>
+            <span class="tile-sub">ผู้ปฏิบัติงานภาคสนาม</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- SCREEN: general info -->
+      <section class="screen" id="screen-general">
+        <h2>ข้อมูลทั่วไป</h2>
+        <p class="eyebrow-note">ข้อมูลส่วนนี้เป็นข้อมูลประชากรศาสตร์ ไม่นำไปคำนวณเป็นคะแนนประเมิน และไม่มีการสอบถามชื่อหรือข้อมูลที่ระบุตัวตน</p>
+        <div id="generalFieldsContainer"></div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" id="btnBackToIntro">ย้อนกลับ</button>
+          <button type="button" class="btn btn-primary" id="btnToQuestions">ถัดไป</button>
+        </div>
+      </section>
+
+      <!-- SCREEN: likert questions, one at a time -->
+      <section class="screen" id="screen-questions">
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="progress-label" id="progressLabel">ข้อ 1 จาก 10</div>
+
+        <div class="question-dimension" id="questionDimension"></div>
+        <div class="question-text" id="questionText"></div>
+        <div class="likert-grid" id="likertGrid"></div>
+
+        <div class="banner banner-error" id="questionBanner">กรุณาเลือกคำตอบก่อนไปข้อถัดไป</div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" id="btnPrevQuestion">ก่อนหน้า</button>
+          <button type="button" class="btn btn-primary" id="btnNextQuestion">ถัดไป</button>
+        </div>
+      </section>
+
+      <!-- SCREEN: review + submit -->
+      <section class="screen" id="screen-review">
+        <h2>ตรวจสอบก่อนส่งแบบประเมิน</h2>
+        <p>ท่านตอบครบทุกข้อแล้ว กดปุ่มด้านล่างเพื่อส่งแบบประเมิน</p>
+        <div class="banner banner-error" id="submitErrorBanner"></div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" id="btnBackToQuestionsFromReview">ย้อนกลับไปแก้ไข</button>
+          <button type="button" class="btn btn-primary" id="btnSubmit">ส่งแบบประเมิน</button>
+        </div>
+      </section>
+
+      <!-- SCREEN: success -->
+      <section class="screen" id="screen-success">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="success-message">ขอบคุณที่สละเวลามาประเมิน Lumina นะคะ
+
+ทุกความคิดเห็นของคุณมีความหมายกับพวกเรามาก ๆ
+คำตอบของคุณจะช่วยให้ Lumina พัฒนาต่อไปได้อีกนะ
+
+Love you</p>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" id="btnRestart">ประเมินอีกครั้ง</button>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="access-footer">
+      <a href="results.html?role=teacher">สำหรับอาจารย์</a>
+      <a href="results.html?role=owner">สำหรับเจ้าของโครงงาน</a>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="questions.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
