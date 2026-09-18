@@ -12,5 +12,5 @@
  * dashboard live only in the Apps Script's Script Properties, never here.
  */
 const LUMINA_CONFIG = {
-  APPS_SCRIPT_URL: "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE"
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxRLw483jFxRqVtzJ6rTHknNqd1Ss_nBusvYtuhLcz6y0vKXHQEqR9uj-lgRbqJOg-n/exec"
 };
